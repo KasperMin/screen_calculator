@@ -1,0 +1,27 @@
+.container {
+  border: 1px solid rgb(0,128,0);
+  display: table;
+  margin: 0 auto;
+}
+
+.col {
+  border: 1px solid rgb(30, 144, 255);
+  float:left;
+  clear:left;
+  height: 60px;
+  width: 60px;
+  text-align: center;
+}
+
+.row {
+  border: 1px solid rgb(255,20, 147);
+  float: left;
+  height: 60px;
+  width: 60px;
+  text-align: center;
+}
+
+p {
+  border: 1px solid;
+  font-size: 30px;
+}
