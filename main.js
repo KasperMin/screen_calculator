@@ -8,42 +8,81 @@ var subtractRes;
 var multiplyRes;
 var divideRes;
 
-
 var divContainer = document.createElement('div');
 divContainer.className = "container";
 document.body.appendChild(divContainer);
-var number = 0;
+var numberCol = 10;
+var numberRow = 7;
 var numberOut;
+
 // Grid
 function createGrid(colum, row) {
     for (var c = 0; c < colum; c++) {
       var divCol = document.createElement('div');
       divCol.className = "col";
       divContainer.appendChild(divCol);
-      if (number <= 7) {
-        numberOut = number + 1
-        divCol.innerText = numberOut;
+      numberOut = numberCol -= 3
+      if (numberCol <= 0) {
+        divCol.innerText = 0;
+        divCol.setAttribute("id", "0");
+      } else {
+        divCol.innerText = numberOut
+        divCol.setAttribute("id", numberOut);
       }
-      number +=1;
       for (var r = 1; r < row; r++) {
         var divRow = document.createElement('div');
         divRow.className = "row";
         divContainer.appendChild(divRow)
-        number += 1
-        if (number <=9) {
-          divRow.innerText = number
-        }
-      }
-    }
-    divCol.addEventListener("click", function() {
-      console.log(divContainer.firstChild.innerText)
-    });
 
-}
+        numberRow = numberCol + r;
+        switch (numberRow) {
+          case 10:
+            divRow.innerText = "+";
+            divRow.setAttribute("id", "+");
+            break;
+          case 7:
+            divRow.innerText = "-"
+            divRow.setAttribute("id", "-");
+            break;
+          case 4:
+            divRow.innerText = "%"
+            divRow.setAttribute("id", "%");
+            break;
+          case 1:
+            divRow.innerText = "*"
+            divRow.setAttribute("id", "*");
+            break;
+          case 0:
+            divRow.innerText = "clear"
+            divRow.setAttribute("id", "clear");
+            break;
+          case -1:
+            divRow.innerText = "="
+            divRow.setAttribute("id", "=");
+            break;
+          default:
+            divRow.innerText = numberRow
+            divRow.setAttribute("id", numberRow);
+      }
+
+      divCol.addEventListener("click", function() {
+        console.log(event.currentTarget.id)
+      });
+
+      divRow.addEventListener("click", function() {
+        console.log(event.currentTarget.id)
+      });
+
+    } // end of inner loop
+
+  } // end of outer loop
+
+
+} // end of createGrid funciton
 
 // Button click function
 
-createGrid(4, 3)
+createGrid(4, 4)
 
 // Addition
 function add(num1, num2) {
@@ -110,7 +149,7 @@ divideResDisplay.innerHTML = "divideResult = " + divideRes;
 //     return match.length;
 // }
 //
-// vowel_count("hanna montanna");
+// vowel_count("hanna montana");
 //
 // function reverse(word) {
 //     x = word.split("").reverse().join("");
