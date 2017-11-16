@@ -1,27 +1,82 @@
-.container {
-  border: 1px solid rgb(0,128,0);
-  display: table;
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #466368;
+  background: -webkit-linear-gradient(to right bottom, #d9a7c7, #fffcdc);
+  background:    -moz-linear-gradient(to right bottom, #d9a7c7, #fffcdc);
+  background:         linear-gradient(to right bottom, #d9a7c7, #fffcdc);
+  overflow: hidden;
+
+
+}
+
+h1 {
+  position: relative;
+  left: 37px;
+  border: 2px solid rgba(0,0,0, 0.5);
+  border-radius: 8px;
+  font-size: 40px;
+  text-align: right;
   margin: 0 auto;
+  margin-top: 170px;
+  padding: 0 15px;
+  height: 80px;
+  line-height: 80px;
+  vertical-align: middle;
+  width: 430px;
+}
+
+.container {
+  border-radius: 8px;
+  position: absolute;
+  float:left;
+  top: 0;
+  top: 250px;
+  left: 36%;
+  border: 1px solid;
+
+}
+
+.col, .row {
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: helvetica;
+  height: 80px;
+  width: 114px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 80px;
+  pointer-events:
+
 }
 
 .col {
-  border: 1px solid rgb(30, 144, 255);
   float:left;
   clear:left;
-  height: 60px;
-  width: 60px;
-  text-align: center;
 }
 
 .row {
-  border: 1px solid rgb(255,20, 147);
   float: left;
-  height: 60px;
-  width: 60px;
-  text-align: center;
 }
 
-p {
-  border: 1px solid;
-  font-size: 30px;
+
+.col:hover, .row:hover {
+  cursor: pointer;
+  background: linear-gradient(to left top, #D3CCE3, #E9E4F0) !important;
 }
+
+
+
+/* display: table;
+  margin: 0 auto;
+
+
+
+
+*/
