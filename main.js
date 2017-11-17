@@ -1,35 +1,66 @@
-var display = document.getElementById('display');
+// - periods
+// - convert to all javascript
+// - limit the amount of numbers that can be typed
+// - Prevent NaN
+
 var displayBg = document.getElementsByClassName('displayBg')
-var allButtons = document.createElement('div');
-allButtons.className = "container";
-document.body.appendChild(allButtons);
+var calculator = document.createElement('div');
+calculator.className = "container";
+document.body.appendChild(calculator);
 
-var numberCol = 10, numberRow = 7, colorBgOn = false;
-
+var numberCol = 13, numberRow = 10, colorBgOn = false;
 
 // Grid
 function createGrid(colum, row) {
     for (var c = 0; c < colum; c++) {
-      var divCol = document.createElement('div');
-      divCol.className = "col";
-      allButtons.appendChild(divCol);
-
       numberCol -= 3
+
+      // Merging
+      if (numberCol == 10 ) {
+        var divCol = document.createElement('div');
+        calculator.appendChild(divCol)
+        divCol.colSpan = 4;
+        divCol.innerText = "0";
+        divCol.setAttribute("id", "display")
+        divCol.className = "display"
+        divCol.style
+      } else {
+        var divCol = document.createElement('td');
+        divCol.className = "col";
+        calculator.appendChild(divCol);
+      }
+
+      // Making sure that the last negative numberCol is set to zero
       if (numberCol <= 0) {
         divCol.innerText = 0;
         divCol.setAttribute("id", "0");
+      } else if (numberCol == 10){
+
+
       } else {
         divCol.innerText = numberCol
         divCol.setAttribute("id", numberCol);
       }
 
       for (var r = 1; r < row; r++) {
-        var divRow = document.createElement('div');
-        divRow.className = "row";
-        allButtons.appendChild(divRow)
-
         numberRow = numberCol + r;
+
+        // Merging the first 3 rows into one by checking into the first if statement
+        if (numberRow > 10) {
+          var divRow = document.createElement('tr');
+          calculator.appendChild(divRow)
+          divRow.colSpan = 3;
+        } else {
+          var divRow = document.createElement('tr');
+          divRow.className = "row";
+          calculator.appendChild(divRow)
+        }
+
         switch (numberRow) {
+          case 13:
+          case 12:
+          case 11:
+            break;
           case 10:
             divRow.innerText = "+";
             divRow.setAttribute("id", "+");
@@ -67,15 +98,15 @@ function createGrid(colum, row) {
 
     } // end of inner loop
 
+
   } // end of outer loop
-  var divide = document.getElementById('%')
-  var multiply = document.getElementById('*')
-  var subtract = document.getElementById('-')
-  var plus = document.getElementById('+');
-  var equal = document.getElementById('=');
-  var clear = document.getElementById('clear');
+
+  var divide = document.getElementById('%'),  multiply = document.getElementById('*'), subtract = document.getElementById('-')
+  var plus = document.getElementById('+'), equal = document.getElementById('='), clear = document.getElementById('clear');
   var numberButtons = $('.col, .row:not(#\\+, #\\-, #\\%, #\\*, #\\=, #clear)');
-  var mathOperator = [];
+  var mathOperator = [], firstNumHit = true, firstNum = [], secondNum = [], displayNum = []
+  var allOperators;
+
   // COLOR ----------------------------------
 
    var addAndRemoveGreyBg = function() {
@@ -90,6 +121,8 @@ function createGrid(colum, row) {
      });
   }
 
+
+
   // Make own filter helper function!
   $('.row').filter('#\\%, #\\*, #\\-, #\\+, #\\=, #clear').each(function(id) {
     document.getElementById(this.id).addEventListener('click', addAndRemoveGreyBg);
@@ -97,73 +130,80 @@ function createGrid(colum, row) {
 
   numberButtons.on("click", addAndRemoveGreyBg);
 
-  // COLOR END ---------------------------------------
+  // BLINK EFFECT ---------------------------------------
+
+  var blinkFunction = function() {
+    $('#display').fadeOut(1, function() {
+      $(this).fadeIn();
+    })
+  }
 
   // MATH OPERATORS -------------------------
-  divide.addEventListener('click', function() {
-    if (mathOperator.length < 3) {
-      mathOperator.push(divideFunction)
-      firstNumHit = false
-      console.log('%')
-    }
-  });
+  if (firstNum[0] < firstNum.lengt ) {
+    blinkFunction()
+  } else {
+    divide.addEventListener('click', function() {
+      if (mathOperator.length < 3) {
+        mathOperator.push(divideFunction)
+        firstNumHit = false
+        console.log('%')
+      }
+    });
 
-  multiply.addEventListener('click', function(){
-    if (mathOperator.length < 3) {
-      mathOperator.push(multiplyFunction)
-      firstNumHit = false
-      console.log('*')
-    }
-  })
-
-  plus.addEventListener("click", function() {
-    if (mathOperator.length < 3) {
-      mathOperator.push(addFunction)
-      firstNumHit = false
-      console.log('+')
-    }
-  });
-
-  subtract.addEventListener("click", function() {
-    if (mathOperator.length < 3) {
-      mathOperator.push(subtractFunction)
-      firstNumHit = false
-      console.log('-')
-    }
-  });
-
-  equal.addEventListener("click", function() {
-    secondNum = intConversion(secondNum)
-    if (firstNum.constructor == Array) {
-      firstNum = intConversion(firstNum)
-    }
-
-    if (mathOperator.length == 2) {
-      console.log(mathOperator.shift())
-    }
-
-    result = generalCalculator(firstNum, secondNum, mathOperator[0])
-    console.log('length: ' + mathOperator.length)
-    console.log('left: ' + mathOperator[0])
-    console.log(result)
-    display.innerHTML = result
-    resetAll()
-
+    multiply.addEventListener('click', function(){
+      if (mathOperator.length < 3) {
+        mathOperator.push(multiplyFunction)
+        firstNumHit = false
+        console.log('*')
+      }
     })
 
-  clear.addEventListener("click", function() {
-      display.innerHTML = "0"
-      resetAll() 
-  });
+    plus.addEventListener("click", function() {
+      if (mathOperator.length < 3) {
+        mathOperator.push(addFunction)
+        firstNumHit = false
+        console.log('+')
+      }
+    });
 
-  // MATH OPRATORS END -----------------------------
+    subtract.addEventListener("click", function() {
+      if (mathOperator.length < 3) {
+        mathOperator.push(subtractFunction)
+        firstNumHit = false
+        console.log('-')
+      }
+    });
 
-  // DISPLAY --------------------------------------
+    equal.addEventListener("click", function() {
+      secondNum = intConversion(secondNum)
+      if (firstNum.constructor == Array) {
+        firstNum = intConversion(firstNum)
+      }
 
-  var firstNumHit = true, firstNum = [], secondNum = [], displayNum = []
+      if (mathOperator.length == 2) {
+        console.log(mathOperator.shift())
+      }
 
-  $('.col, .row:not(#\\=, clear)').on("click", function() {
+      result = generalcalculator(firstNum, secondNum, mathOperator[0])
+      console.log('length: ' + mathOperator.length)
+      console.log('left: ' + mathOperator[0])
+      console.log(result)
+      display.innerHTML = result
+      resetAll()
+
+      })
+
+    clear.addEventListener("click", function() {
+        display.innerHTML = "0"
+        resetAll()
+    });
+  }
+
+  // MAIN --------------------------------------
+
+  $('.col, .row:not(#\\=, #clear)').on("click", function() {
     var buttonId = event.target.id
+    blinkFunction()
     match = checkForOperator(buttonId)
 
     // Display
@@ -176,11 +216,10 @@ function createGrid(colum, row) {
         displayNum = []
       }
     } else {
-      displayNum = []
-      displayNum.push(buttonId)
-      display.innerHTML = displayNum.join('')
+
       displayNum = []
     }
+
 
     // Storing of first and second number along with calculation
     if (match == false && firstNumHit == true) {
@@ -201,7 +240,7 @@ function createGrid(colum, row) {
           console.log(mathOperator.shift())
         }
 
-        result = generalCalculator(firstNum, secondNum, mathOperator[0])
+        result = generalcalculator(firstNum, secondNum, mathOperator[0])
 
         display.innerHTML = result
         displayNum = []
@@ -211,6 +250,13 @@ function createGrid(colum, row) {
     }
 
     });
+
+  /* DISPLAY EXTRA -> MIGHT USE INSTEAD OF BLINK
+    displayNum = []
+    displayNum.push(buttonId)
+    display.innerHTML = displayNum.join('')
+    displayNum = []
+  */
 
   // DISPLAY END -----------------------------
 
@@ -234,7 +280,6 @@ function createGrid(colum, row) {
 
   }
 
-
   function resetAll() {
     displayNum = []
     firstNum = []
@@ -242,7 +287,6 @@ function createGrid(colum, row) {
     mathOperator = []
     firstNumHit = true
   }
-
 
   function clearNumArray (numArray) {
     if (numArray == firstNumArray) {
@@ -261,7 +305,7 @@ function createGrid(colum, row) {
 } // end of createGrid funciton
 
 // Genral calculator callback function
-var generalCalculator = function(num1, num2, mathOperator) {
+var generalcalculator = function(num1, num2, mathOperator) {
   return mathOperator(num1, num2)
 }
 
@@ -287,4 +331,4 @@ var divideFunction = function (num1, num2) {
 
 
 // runninng createGrid function
-createGrid(4, 4)
+createGrid(5, 4)
