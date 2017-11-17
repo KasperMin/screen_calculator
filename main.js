@@ -3,12 +3,21 @@
 // - limit the amount of numbers that can be typed
 // - Prevent NaN
 
+var header = document.createElement( 'h1');
+document.body.appendChild(header)
+header.innerHTML = "Javascript Calculator";
+
+var subHeader = document.createElement( 'h4');
+document.body.appendChild( subHeader);
+subHeader.innerHTML = "Javascript Calculator | Made by Kasper (almost) without using jQuery"
+
 var displayBg = document.getElementsByClassName('displayBg')
 var calculator = document.createElement('div');
 calculator.className = "container";
 document.body.appendChild(calculator);
 
 var numberCol = 13, numberRow = 10, colorBgOn = false;
+
 
 // Grid
 function createGrid(colum, row) {
@@ -114,7 +123,7 @@ function createGrid(colum, row) {
        $('.row').filter('#\\-, #\\%, #\\*, #\\+').each(function(id) {
          var element = this.id
          if (element == pushedButton) {
-         document.getElementById(this.id).style.background = 'linear-gradient(to left top, #D3CCE3, #E9E4F0)';
+         document.getElementById(this.id).style.background = 'rgb(245,245,245)';
        } else {
           document.getElementById(this.id).style.background = '#6C70EB';
        }
@@ -256,6 +265,8 @@ function createGrid(colum, row) {
     displayNum.push(buttonId)
     display.innerHTML = displayNum.join('')
     displayNum = []
+
+    linear-gradient(to left top, #D3CCE3, #E9E4F0)
   */
 
   // DISPLAY END -----------------------------
